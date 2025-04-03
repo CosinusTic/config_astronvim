@@ -1,34 +1,102 @@
-# AstroNvim Template
+# Minimal Productive Neovim Config (C & Rust Dev)
 
-**NOTE:** This is for AstroNvim v4+
+A lightweight, plugin-based Neovim configuration optimized for **C** and **Rust** development.  
+Manual suggestions, native LSP support, syntax-aware formatting, and cozy visuals.
 
-A template for getting started with [AstroNvim](https://github.com/AstroNvim/AstroNvim)
+---
 
-## 🛠️ Installation
+## Features
 
-#### Make a backup of your current nvim and shared folder
+-  Colorscheme: [evergarden](https://github.com/comfysage/evergarden)
+-  LSP support for C (`clangd`) and Rust (`rust-analyzer`)
+-  Manual completion with `<C-Space>`
+-  Auto-pairing: `"`, `'`, `{`, `(`, etc.
+-  File tree toggle with `<Space>e` (native `netrw`)
+-  Syntax-aware formatting on save using `.clang-format`
+-  Diagnostics with inline errors, signs, and underlines
 
-```shell
-mv ~/.config/nvim ~/.config/nvim.bak
-mv ~/.local/share/nvim ~/.local/share/nvim.bak
-mv ~/.local/state/nvim ~/.local/state/nvim.bak
-mv ~/.cache/nvim ~/.cache/nvim.bak
-```
+---
 
-#### Create a new user repository from this template
+## Requirements
 
-Press the "Use this template" button above to create a new repository to store your user configuration.
+Make sure the following tools are installed:
 
-You can also just clone this repository directly if you do not want to track your user configuration in GitHub.
+###  System Tools
 
-#### Clone the repository
+| Tool            | Description                     | Install Command (Arch)                   |
+|---------------  |---------------------------------|------------------------------------------|
+| `neovim`        | The editor itself               | `sudo pacman -S neovim`                  |
+| `gcc`           | C compiler                      | `sudo pacman -S gcc`                     |
+| `clangd`        | C/C++ LSP backend               | `sudo pacman -S clang`                   |
+| `rustup`        | Rust toolchain manager          | `sudo pacman -S rustup`                  |
+| `rust-analyzer` | Rust LSP backend                | `rustup component add rust-analyzer`     |
+| `git`           | Plugin fetching (lazy.nvim)     | `sudo pacman -S git`                     |
 
-```shell
-git clone https://github.com/<your_user>/<your_repository> ~/.config/nvim
-```
+---
 
-#### Start Neovim
+## Folder Structure
+├── init.lua
+├── lazy
+│   └── lazy.nvim
+│       ├── bootstrap.lua
+│       ├── CHANGELOG.md
+│       ├── doc
+│       ├── LICENSE
+│       ├── lua
+│       ├── manifest
+│       ├── README.md
+│       ├── scripts
+│       ├── selene.toml
+│       ├── stylua.toml
+│       ├── tests
+│       ├── TODO.md
+│       └── vim.toml
+├── lazy-lock.json
+├── lua
+│   ├── colors.lua
+│   ├── formatting.lua
+│   ├── native.lua
+│   └── plugins.lua
+└── README.md
 
-```shell
-nvim
-```
+Every modification you bring is advised to be in ```/lua``` (```/lazy``` is more of an installer used for the
+color theme here)
+
+
+---
+
+
+## Installation
+------------
+1. Clone this config:
+   ```bash
+   git clone https://github.com/yourusername/your-nvim-config ~/.config/nvim
+   ```
+2. Launch Neovim:
+   nvim
+
+3. Wait for lazy.nvim to install all plugins, or run manually:
+   :Lazy sync
+
+## Keybindings
+-----------
+- <Space>e         -> Toggle file explorer (netrw)
+- <C-Space>        -> Manually trigger suggestions
+- <C-n> / <C-p>    -> Navigate suggestions
+- <CR>             -> Confirm suggestion
+- <leader>s        -> Toggle syntax highlighting
+
+## Formatting on Save
+------------------
+For C/C++ files, a local .clang-format file will be used to format code on :w.
+
+## Optional Improvements
+---------------------
+- mason.nvim for LSP installer/manager
+- nvim-dap for Rust or C debugging
+- telescope.nvim for fuzzy file/project navigation
+
+
+## License
+-------
+MIT - Just do what you want
