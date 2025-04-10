@@ -32,6 +32,22 @@ Make sure the following tools are installed:
 | `rust-analyzer` | Rust LSP backend                | `rustup component add rust-analyzer`     |
 | `git`           | Plugin fetching (lazy.nvim)     | `sudo pacman -S git`                     |
 
+### Generate compilation flags
+
+At the directory root of the kernel (/linux), and after compiling, run ```make compile_commands.json```.
+This will generate compile_commands.json which you must place at a parent directory of your development directory. This will detect dependencies and detect kernel headers against your kernel's compiled modules.
+
+Additionnaly, place a .clangd at the same location of your compile_commands.json. This file will handle flags conflicts between gcc and clang to avoir unhandled flags errors by the language server.
+
+.clangd:
+```
+CompileFlags:
+  Add: -Wno-unknown-warning-option
+  Remove: [-m*, -f*]
+```
+
+
+
 ---
 
 ## Folder Structure
