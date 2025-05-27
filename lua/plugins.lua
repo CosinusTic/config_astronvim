@@ -29,22 +29,56 @@ return {
   {
       "neovim/nvim-lspconfig",
       config = function()
-      local lspconfig = require("lspconfig")
-      lspconfig.clangd.setup {}
-      lspconfig.rust_analyzer.setup {}
-      lspconfig.ruff.setup {
-          cmd = { "ruff", "server" },
-          filetypes = { "python" },
-          root_dir = lspconfig.util.find_git_ancestor,
-          init_options = {
+          local lspconfig = require("lspconfig")
+          lspconfig.clangd.setup {}
+          lspconfig.rust_analyzer.setup {}
+          lspconfig.ruff.setup {
+              cmd = { "ruff", "server" },
+              filetypes = { "python" },
+              root_dir = lspconfig.util.find_git_ancestor,
+              init_options = {
+                settings = {
+                  args = {}, 
+                }
+              },
+          }
+          lspconfig.metals.setup {
+            init_options = {
+              statusBarProvider = "on",
+              compilerOptions = {
+                snippetAutoIndent = true,
+              },
+            },
             settings = {
-              args = {}, 
-            }
-          },
-      }
-    end
+              metals = {
+                showImplicitArguments = true,
+                excludedPackages = {},
+              },
+            },
+            on_attach = function(client, bufnr)
+              require("cmp_nvim_lsp").default_capabilities()
+            end,
+          }
+          vim.api.nvim_create_autocmd("FileType", {
+            pattern = { "scala", "sbt", "java" },
+            callback = function()
+              local metals = require("metals")
+              metals.initialize_or_attach({})
+            end,
+          })
+      end
   },
-  -- Autocompletion engine (manual trigger only)
+  {
+    "rafamadriz/friendly-snippets",
+        config = function()
+          require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./snippets" } })
+        end,
+  },
+  {
+    "scalameta/nvim-metals",
+    ft = { "scala", "sbt", "java" },
+  },
+  -- Auocompletion engine (manual trigger only)
   {
     "hrsh7th/nvim-cmp",
     config = function()
@@ -103,18 +137,13 @@ return {
   { "hrsh7th/cmp-buffer" },
   { "hrsh7th/cmp-path" },
   { "saadparwaiz1/cmp_luasnip" },
+  -- Snippets for Scala
+  { "nvim-lua/plenary.nvim" },
 
   -- Completion for pairs: [[ , ", ', [, {, ( ]]
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     config = true,
-  },
-  -- Intellisense for python
-  {
-    'neovim/nvim-lsp',
-     config = function()
-       require("lspconfig").pyright.setup({})
-     end
   },
 }
