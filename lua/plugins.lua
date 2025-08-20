@@ -32,16 +32,7 @@ return {
       local lspconfig = require("lspconfig")
       lspconfig.clangd.setup {}
       lspconfig.rust_analyzer.setup {}
-      lspconfig.ruff.setup {
-          cmd = { "ruff", "server" },
-          filetypes = { "python" },
-          root_dir = lspconfig.util.find_git_ancestor,
-          init_options = {
-            settings = {
-              args = {}, 
-            }
-          },
-      }
+      lspconfig.pyright.setup {}
     end
   },
   -- Autocompletion engine (manual trigger only)
