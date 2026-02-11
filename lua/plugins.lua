@@ -5,23 +5,33 @@
 return {
     -- color theme
   {
-    'comfysage/evergarden',
+    "rebelot/kanagawa.nvim",
     priority = 1000,
     opts = {
-      theme = {
-        variant = 'fall',
-        accent = 'green',
+      compile = false,
+      undercurl = true,
+      commentStyle = { italic = true },
+      keywordStyle = { italic = true },
+      statementStyle = { bold = true },
+      transparent = false,
+      dimInactive = false,
+      terminalColors = true,
+      colors = {
+        palette = {},
+        theme = {
+          wave = {},
+          lotus = {},
+          dragon = {},
+          all = {},
+        },
       },
-      editor = {
-        transparent_background = false,
-        sign = { color = 'none' },
-        float = {
-          color = 'mantle',
-          invert_border = false,
-        },
-        completion = {
-          color = 'surface0',
-        },
+      overrides = function(colors)
+        return {}
+      end,
+      theme = "wave",
+      background = {
+        dark = "wave",
+        light = "lotus",
       },
     },
   },
