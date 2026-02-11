@@ -1,1 +1,1 @@
-vim.cmd.colorscheme("evergarden")
+vim.cmd.colorscheme("kanagawa")
